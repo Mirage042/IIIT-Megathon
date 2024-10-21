@@ -1,0 +1,234 @@
+{% block stylesheets %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  .chatbot-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #931883;
+    color: white;
+    padding: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+  }
+
+  .chatbot-icon i {
+    font-size: 1.8em;
+  }
+
+  .chatbot-icon:hover {
+    background-color: #750f90;
+  }
+
+  .chatbot-modal {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 320px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .chatbot-modal-header {
+    padding: 15px;
+    background-color: #750f90;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .chatbot-modal-body {
+    padding: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .chatbot-modal-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    background-color: #f4f4f4;
+  }
+
+  .chatbot-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+
+  .chatbot-button {
+    padding: 10px 15px;
+    background-color: #931883;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 5px;
+  }
+
+  .chatbot-button:hover {
+    background-color: #750f90;
+  }
+
+  .chatbot-close {
+    cursor: pointer;
+    color: white;
+    font-size: 1.5em;
+  }
+
+  .chat-message {
+    margin-bottom: 10px;
+  }
+
+  .user-message {
+    text-align: right;
+    color: #1f2131;
+  }
+
+  .bot-message {
+    text-align: left;
+    color: #750f90;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .chatbot-button {
+    flex: 1;
+    margin: 0 5px;
+  }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="chatbot-icon" id="chatbot-icon">
+  <i class="tim-icons icon-chat-33"></i>
+</div>
+
+<div class="chatbot-modal" id="chatbot-modal">
+  <div class="chatbot-modal-header">
+    Chatbot
+    <span class="chatbot-close" id="chatbot-close">&times;</span>
+  </div>
+  <div class="chatbot-modal-body" id="chatbot-messages">
+    <!-- Chatbot messages will be shown here -->
+  </div>
+  <div class="chatbot-modal-footer">
+    <input type="file" id="image-upload" style="display: none" />
+    <input
+      type="text"
+      class="chatbot-input"
+      id="chatbot-input"
+      placeholder="Ask something..."
+    />
+    <div class="button-container">
+      <button class="chatbot-button" id="chatbot-send">Send</button>
+      <button class="chatbot-button" id="upload-image">Upload Image</button>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block javascripts %}
+<script>
+  const chatbotIcon = document.getElementById("chatbot-icon");
+  const chatbotModal = document.getElementById("chatbot-modal");
+  const chatbotClose = document.getElementById("chatbot-close");
+  const messageArea = document.getElementById("chatbot-messages");
+
+  // Open chatbot modal
+  chatbotIcon.addEventListener("click", () => {
+    chatbotModal.style.display = "block";
+  });
+
+  // Close chatbot modal
+  chatbotClose.addEventListener("click", () => {
+    chatbotModal.style.display = "none";
+  });
+
+  // Handle sending chatbot message
+  document.getElementById("chatbot-send").addEventListener("click", () => {
+    const input = document.getElementById("chatbot-input").value;
+    if (input.trim()) {
+      sendMessage(input);
+    }
+  });
+
+  function sendMessage(input) {
+    const userMessage = `<div class="chat-message user-message"><strong>You:</strong> ${input}</div>`;
+    messageArea.innerHTML += userMessage;
+
+    // Send input to Flask backend
+    fetch("/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: input }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const botResponse = `<div class="chat-message bot-message"><strong>Bot:</strong> ${data.response}</div>`;
+        messageArea.innerHTML += botResponse;
+        messageArea.scrollTop = messageArea.scrollHeight; // Scroll to the bottom
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    document.getElementById("chatbot-input").value = "";
+  }
+
+  // Handle image upload
+  document.getElementById("upload-image").addEventListener("click", () => {
+    document.getElementById("image-upload").click();
+  });
+
+  document
+    .getElementById("image-upload")
+    .addEventListener("change", function (event) {
+      const imageFile = event.target.files[0];
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("image", imageFile);
+
+        fetch("/upload_image", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const botMessage = `<div class="chat-message bot-message"><strong>Bot:</strong> ${data.message}</div>`;
+            messageArea.innerHTML += botMessage;
+            messageArea.scrollTop = messageArea.scrollHeight;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    });
+</script>
+{% endblock javascripts %}

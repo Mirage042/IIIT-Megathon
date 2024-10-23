@@ -167,6 +167,12 @@
         Send
       </button>
       <button class="chatbot-button" id="upload-image">Upload Image</button>
+      <input
+        type="file"
+        id="file-input"
+        accept="image/*"
+        style="display: none"
+      />
     </div>
   </div>
 </div>
@@ -224,7 +230,7 @@
         const formData = new FormData();
         formData.append("image", imageFile);
 
-        fetch("/upload_image", {
+        fetch("/upload", {
           method: "POST",
           body: formData,
         })

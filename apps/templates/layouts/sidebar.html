@@ -10,6 +10,12 @@
           <p>Dashboard</p>
         </a>
       </li>
+      <li class="{% if 'tables' in segment %} active {% endif %}">
+        <a href="/tables.html">
+          <i class="tim-icons icon-puzzle-10"></i>
+          <p>Table List</p>
+        </a>
+      </li>
       <li class="{% if 'user' in segment %} active {% endif %}">
         <a href="/user.html">
           <i class="tim-icons icon-single-02"></i>
@@ -34,12 +40,7 @@
           <p>Notifications</p>
         </a>
       </li> -->
-      <li class="{% if 'tables' in segment %} active {% endif %}">
-        <a href="/tables.html">
-          <i class="tim-icons icon-puzzle-10"></i>
-          <p>Table List</p>
-        </a>
-      </li>
+
       <!-- <li class="{% if 'typography' in segment %} active {% endif %}">
         <a href="/typography.html">
           <i class="tim-icons icon-align-center"></i>

@@ -159,6 +159,31 @@
         saved a failing local music store. Yui's arc of self-actualization.
       </p>
     </div>
+
+    <div class="col-lg-4" style="max-width: 33.33%">
+      <div class="card card-chart">
+        <div class="card-header">
+          <canvas id="heatmapChart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4" style="max-width: 33.33%">
+      <div class="card card-chart">
+        <div class="card-header" style="padding: 20px">
+          <canvas id="radialBarChart" width="300" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4" style="max-width: 33.33%">
+      <div class="card card-chart">
+        <div class="card-header" style="padding: 20px">
+          <h2>Feedback Over Time</h2>
+          <canvas id="feedbackChart" width="800" height="400"></canvas>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock content %}
@@ -344,6 +369,135 @@
         },
       });
     });
+  });
+
+  const ctx = document.getElementById("heatmapChart").getContext("2d");
+
+  const feedbackData = [10, 20, 15, 30, 25]; // Number of votes for each star
+  const labels = ["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"];
+
+  const heatmapChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Feedback",
+          data: feedbackData,
+          backgroundColor: feedbackData.map((value) => {
+            const intensity = Math.round(
+              (value / Math.max(...feedbackData)) * 255
+            );
+            return `rgba(${intensity}, 100, 150, 0.6)`;
+          }),
+          borderColor: "rgba(0, 0, 0, 1)",
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: Math.max(...feedbackData) + 10,
+        },
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return context.label + ": " + context.raw + " votes";
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const ctx1 = document.getElementById("radialBarChart").getContext("2d");
+
+  const feedbackData1 = [10, 5, 15, 20, 50]; // Number of votes for each star (1 to 5)
+  const totalVotes = feedbackData1.reduce((a, b) => a + b, 0);
+  const feedbackPercentage = feedbackData1.map(
+    (vote) => (vote / totalVotes) * 100
+  );
+
+  const radialBarChart = new Chart(ctx1, {
+    type: "doughnut",
+    data: {
+      labels: ["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"],
+      datasets: [
+        {
+          data: feedbackPercentage,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.6)", // 1 Star
+            "rgba(255, 159, 64, 0.6)", // 2 Stars
+            "rgba(255, 205, 86, 0.6)", // 3 Stars
+            "rgba(75, 192, 192, 0.6)", // 4 Stars
+            "rgba(54, 162, 235, 0.6)", // 5 Stars
+          ],
+          borderWidth: 0,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      cutout: "70%", // Adjust cutout for inner circle effect
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return (
+                context.label +
+                ": " +
+                feedbackPercentage[context.dataIndex].toFixed(1) +
+                "%"
+              );
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const ctx2 = document.getElementById("feedbackChart").getContext("2d");
+  const feedbackChart = new Chart(ctx2, {
+    type: "line",
+    data: {
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [
+        {
+          label: "User Feedback Score",
+          data: [3, 2, 5, 4, 7, 6, 8], // Example data points
+          fill: false,
+          borderColor: "rgba(75, 192, 192, 1)",
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          borderWidth: 2,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: "white",
+          },
+        },
+        x: {
+          ticks: {
+            color: "white",
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: "white",
+          },
+        },
+      },
+    },
   });
 </script>
 {% endblock javascripts %}

@@ -237,17 +237,35 @@
     }, 3000);
   }
 
-  function sendMessage() {
+  async function sendMessage() {
     const input = document.getElementById("messageInput");
     const message = input.value.trim();
     if (message) {
       addMessage(message, "user-msg");
       input.value = "";
       input.style.height = "48px"; // Reset height
-      // Simulate assistant response
-      setTimeout(() => {
-        addMessage("This is a sample response.", "assistant-message");
-      }, 1000);
+
+      try {
+        const response = await fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: message }),
+        });
+        const data = await response.json();
+
+        // Check if the response contains an error or a valid response
+        if (data.error) {
+          addMessage("Error: " + data.error, "assistant-message");
+        } else {
+          addMessage(data.response, "assistant-message");
+        }
+      } catch (error) {
+        addMessage(
+          "An error occurred while communicating with the server.",
+          "assistant-message"
+        );
+        console.error("Error:", error);
+      }
     }
   }
 

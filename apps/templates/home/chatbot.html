@@ -50,32 +50,13 @@
   }
 
   .chatbot-modal-body {
-    padding: 15px 15px 15px 15px; /* Ensure padding on all sides */
-    max-height: 400px; /* Set a max-height to limit visible area */
-    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 15px;
+    max-height: 400px;
+    overflow-y: auto;
     background-color: #f4f4f4;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Align messages to start */
-    padding-right: 20px; /* Add padding on the right for scrollbar */
-  }
-
-  /* Optional: Style the scrollbar */
-  .chatbot-modal-body::-webkit-scrollbar {
-    width: 8px; /* Scrollbar width */
-  }
-
-  .chatbot-modal-body::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Track color */
-  }
-
-  .chatbot-modal-body::-webkit-scrollbar-thumb {
-    background-color: #931883; /* Thumb color */
-    border-radius: 10px;
-  }
-
-  .chatbot-modal-body::-webkit-scrollbar-thumb:hover {
-    background-color: #750f90; /* Thumb hover color */
+    justify-content: flex-end;
   }
 
   .chatbot-modal-footer {
@@ -117,12 +98,11 @@
 
   .chat-message {
     margin-bottom: 10px;
-    margin-right: 10px; /* Space for the scrollbar */
   }
 
   .user-message {
     text-align: right;
-    color: #750f90;
+    color: #1f2131;
   }
 
   .bot-message {
@@ -163,30 +143,29 @@
       placeholder="Ask something..."
     />
     <div class="button-container">
-      <button style="margin-left: 0px" class="chatbot-button" id="chatbot-send">
-        Send
-      </button>
+      <button class="chatbot-button" id="chatbot-send">Send</button>
       <button class="chatbot-button" id="upload-image">Upload Image</button>
-      <input
-        type="file"
-        id="file-input"
-        accept="image/*"
-        style="display: none"
-      />
     </div>
   </div>
 </div>
 {% endblock content %} {% block javascripts %}
 <script>
-  // Open and close chatbot modal
+  // Check if the current URL is for tables.html
+  if (window.location.pathname.includes("tables.html")) {
+    document.getElementById("chatbot-icon").style.display = "none";
+  }
+
   const chatbotIcon = document.getElementById("chatbot-icon");
   const chatbotModal = document.getElementById("chatbot-modal");
   const chatbotClose = document.getElementById("chatbot-close");
+  const messageArea = document.getElementById("chatbot-messages");
 
+  // Open chatbot modal
   chatbotIcon.addEventListener("click", () => {
     chatbotModal.style.display = "block";
   });
 
+  // Close chatbot modal
   chatbotClose.addEventListener("click", () => {
     chatbotModal.style.display = "none";
   });
@@ -200,24 +179,31 @@
   });
 
   function sendMessage(input) {
-    const messageArea = document.getElementById("chatbot-messages");
     const userMessage = `<div class="chat-message user-message"><strong>You:</strong> ${input}</div>`;
     messageArea.innerHTML += userMessage;
 
-    // Simulate bot response after a delay
-    setTimeout(() => {
-      const botResponse = `<div class="chat-message bot-message"><strong>Bot:</strong> Here's the info you requested: ${input}</div>`;
-      messageArea.innerHTML += botResponse;
+    // Send input to Flask backend
+    fetch("/chatbot", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: input }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const botResponse = `<div class="chat-message bot-message"><strong>Bot:</strong> ${data.response}</div>`;
+        messageArea.innerHTML += botResponse;
+        messageArea.scrollTop = messageArea.scrollHeight; // Scroll to the bottom
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
 
-      // Scroll to the bottom of the message area after new message
-      messageArea.scrollTop = messageArea.scrollHeight;
-    }, 1000);
-
-    // Clear input field after sending
     document.getElementById("chatbot-input").value = "";
   }
 
-  // Upload image functionality
+  // Handle image upload
   document.getElementById("upload-image").addEventListener("click", () => {
     document.getElementById("image-upload").click();
   });
@@ -230,15 +216,15 @@
         const formData = new FormData();
         formData.append("image", imageFile);
 
-        fetch("/upload", {
+        fetch("/upload_image", {
           method: "POST",
           body: formData,
         })
           .then((response) => response.json())
           .then((data) => {
-            const messageArea = document.getElementById("chatbot-messages");
-            messageArea.innerHTML += `<div class="chat-message bot-message"><strong>Bot:</strong> ${data.message}</div>`;
-            messageArea.scrollTop = messageArea.scrollHeight; // Scroll to the bottom
+            const botMessage = `<div class="chat-message bot-message"><strong>Bot:</strong> ${data.message}</div>`;
+            messageArea.innerHTML += botMessage;
+            messageArea.scrollTop = messageArea.scrollHeight;
           })
           .catch((error) => {
             console.error("Error:", error);

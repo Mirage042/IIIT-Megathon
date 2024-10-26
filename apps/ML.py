@@ -1,6 +1,6 @@
 import os
 import numpy as np
-import matplotlib.pyplot as plt
+import json
 from skimage import io, filters, color
 
 # Define your color palette
@@ -62,47 +62,10 @@ def calculate_edge_intensity(image):
     return np.sum(edges)
 
 
-# Function to plot metrics
-def plot_metrics(metrics, output_plot_path):
-    metric_names = ["Brightness", "Contrast", "Sharpness", "Edge Intensity"]
-
-    plt.figure(figsize=(8, 5))  # Slightly larger size for better clarity
-    bars = plt.bar(
-        metric_names,
-        metrics,
-        color=[
-            colors["primary"],
-            colors["secondary"],
-            colors["background"],
-            colors["primary"],
-        ],
-    )
-
-    # Add data labels above the bars for clarity
-    for bar in bars:
-        yval = bar.get_height()
-        plt.text(
-            bar.get_x() + bar.get_width() / 2,
-            yval + 0.02,
-            round(yval, 2),
-            ha="center",
-            va="bottom",
-            color="white",
-            fontsize=10,
-        )
-
-    plt.title("Image Metrics", color=colors["text"], fontsize=14)
-    plt.ylabel("Metric Value", color=colors["text"], fontsize=12)
-    plt.xticks(color=colors["text"], fontsize=10)
-    plt.yticks(color=colors["text"], fontsize=10)
-    plt.gca().set_facecolor(colors["background"])  # Set background color
-
-    # Save the plot
-    plt.tight_layout()  # Adjust layout to prevent clipping
-    plt.savefig(
-        output_plot_path, facecolor=colors["background"], dpi=300
-    )  # Increased DPI for better resolution
-    plt.close()  # Close the figure to free up memory
+# Function to save metrics as JSON
+def save_metrics(metrics, output_file_path):
+    with open(output_file_path, "w") as f:
+        json.dump(metrics, f)
 
 
 # Main processing logic
@@ -130,16 +93,17 @@ if __name__ == "__main__":
         print(f"Sharpness: {sharpness:.2f}")
         print(f"Edge Intensity: {edge_intensity:.2f}")
 
-        # Plot metrics
-        metrics = [brightness, contrast, sharpness, edge_intensity]
+        # Prepare metrics data
+        metrics = {
+            "labels": ["Brightness", "Contrast", "Sharpness", "Edge Intensity"],
+            "values": [brightness, contrast, sharpness, edge_intensity],
+        }
 
-        # Ensure the directory exists (Updated path)
+        # Save metrics to JSON
         plot_dir = r"C:\Users\adika\Documents\Codes\IIIT-Megathon\apps\static\images"
         os.makedirs(plot_dir, exist_ok=True)
-
-        # Save the plot as an image file
-        plot_path = os.path.join(plot_dir, "metrics_plot.png")
-        plot_metrics(metrics, plot_path)
+        output_json_path = os.path.join(plot_dir, "metrics_data.json")
+        save_metrics(metrics, output_json_path)
 
     except FileNotFoundError as e:
         print(e)

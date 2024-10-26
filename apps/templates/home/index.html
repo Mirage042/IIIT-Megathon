@@ -1,69 +1,349 @@
 {% extends "layouts/base.html" %} {% block title %} Dashboard {% endblock %}
 
-<!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %} {% endblock stylesheets %} {% block content %}
-
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+/>
+{% endblock stylesheets %} {% block content %}
 <div class="content">
   <div class="row">
     <div class="col-lg-4">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Graph 1</h5>
+          <h5 class="card-category">Sentiment Score Over Time</h5>
           <h3 class="card-title">
-            <i class="tim-icons icon-bell-55 text-primary"></i> Example 1
+            <i class="tim-icons icon-bell-55 text-primary"></i> Sentiment Score
+            Chart
           </h3>
+          <canvas
+            id="sentimentScoreChart"
+            width="800"
+            height="500"
+            style="padding: 10px"
+          ></canvas>
         </div>
-        <img src="/static/images/metrics_plot.png" alt="Metrics Plot" style="width: 675px; height: auto;">
       </div>
     </div>
+
     <div class="col-lg-4">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Graph 2</h5>
+          <h5 class="card-category">Concern Frequency</h5>
           <h3 class="card-title">
-            <i class="tim-icons icon-delivery-fast text-info"></i> Example 2
+            <i class="tim-icons icon-bell-55 text-primary"></i> Concern
+            Frequency Chart
           </h3>
+          <canvas
+            id="concernFrequencyChart"
+            width="800"
+            height="500"
+            style="padding: 10px"
+          ></canvas>
         </div>
-        <img src="/static/images/metrics_plot.png" alt="Metrics Plot" style="width: 675px; height: auto;">
       </div>
     </div>
+
     <div class="col-lg-4">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Graph 3</h5>
+          <h5 class="card-category">Sentiment Shift Analysis</h5>
           <h3 class="card-title">
-            <i class="tim-icons icon-send text-success"></i> Example 3
+            <i class="tim-icons icon-bell-55 text-primary"></i> Sentiment Shift
+            Chart
           </h3>
+          <canvas
+            id="sentimentShiftChart"
+            width="800"
+            height="500"
+            style="padding: 10px"
+          ></canvas>
         </div>
-        <img src="/static/images/metrics_plot-3.png" alt="Metrics Plot" style="width: 675px; height: auto;">
       </div>
     </div>
+
     <div class="col-lg-4">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Graph 3</h5>
+          <h5 class="card-category">Intensity Scoring of Concerns Heatmap</h5>
           <h3 class="card-title">
-            <i class="tim-icons icon-send text-success"></i> Example 3
+            <i class="tim-icons icon-bell-55 text-primary"></i> Intensity
+            Scoring of Concerns Heatmap
           </h3>
+          <canvas
+            id="intensityScoringHeatmap"
+            width="800"
+            height="500"
+          ></canvas>
         </div>
-        <img src="/static/images/metrics_plot-3.png" alt="Metrics Plot" style="width: 675px; height: auto;">
+      </div>
+      <div
+        style="
+          max-width: fit-content;
+          padding: 20px;
+          height: 140px;
+          overflow-y: auto;
+        "
+      >
+        <p
+          style="
+            font-family: 'Arial', sans-serif;
+            font-size: 19px;
+            line-height: 1.6;
+          "
+        >
+          Hey guys, did you know that in tewms of mawe human and femawe Pokémon
+          bweeding, Vapoweon is the most compatibwe Pokémon fow humans? Not onwy
+          awe they in the fiewd egg gwoup, which is mostwy compwised of mammaws,
+          Vapoweon awe an avewage of 3”03’ taww and 63.9 pounds, this means
+          they’we wawge enough to be abwe handwe human dicks, and with theiw
+          impwessive Base Stats fow HP and access to Acid Awmow, you can be
+          wough with one. Due to theiw mostwy watew based biowogy, thewe’s no
+          doubt in my mind that an awoused Vapoweon wouwd be incwedibwy wet, so
+          wet that you couwd easiwy have sex with one fow houws without getting
+          sowe.
+        </p>
       </div>
     </div>
-  </div>
+
+    <div class="col-lg-4" style="max-width: 66%">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Polarity Distribution</h5>
+          <h3 class="card-title">
+            <i class="tim-icons icon-bell-55 text-primary"></i> Polarity
+            Distribution Chart
+          </h3>
+          <canvas
+            id="polarityDistributionChart"
+            width="400"
+            height="400"
+            style="padding: 10px"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="col-lg-4"
+      style="max-width: 28%; padding: 20px; height: 500px; overflow-y: auto"
+    >
+      <p
+        style="
+          font-family: 'Arial', sans-serif;
+          font-size: 19px;
+          line-height: 1.6;
+        "
+      >
+        Answer: The idealized world of K-On, and most "cute girls doing cute
+        things" slice-of-life anime, convey strong ethnonationalist and
+        traditionalist themes. This is not a joke answer; the people slapping
+        dime-a-dozen, tired, convoluted non-answers lazily lumping in both 4chan
+        and slandering both WNs and anime fans as "neckbeards", is just slop and
+        does not address the fundamental question: "Why does K-On appeal to
+        those values?" The girls live in an ethnically homogeneous, morally
+        upstanding, non-sexualized, and low crime society. They can walk to and
+        from school, and walk their (urban) neighborhood at night with no fear.
+        There's no LGBT or CRT anything, anywhere, let alone in school. Children
+        are able and encouraged to retain the innocence. The Kotobuki family's
+        behavior is reminiscent of the "Noblesse Oblige" archetype - think Henry
+        Ford, John Mackey, and Andrew Carnegie instead of Paul Singer, Mitt
+        Romney, Mark Zuckerberg, Michael Steinhardt, Bill Gates, and Larry Fink.
+        (The upper class works cooperatively with the lower class, not
+        exploitatively, and has responsibilities to lead and care for "their
+        people" instead of censor and suppress them.) They don't throw their
+        money around. Tsumugi's father is sending his daughter to a "normal"
+        school for the average, working-class person, not some ultra-prestigious
+        elite school. He is invested in the well-being of his community; he
+        saved a failing local music store. Yui's arc of self-actualization.
+      </p>
+    </div>
   </div>
 </div>
-
 {% endblock content %}
+<!-- Ensure end of content block is here -->
 
-<!-- Specific Page JS goes HERE  -->
+<!-- Specific Page JS goes HERE -->
 {% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1.1/dist/chartjs-chart-matrix.min.js"></script>
 
 <script>
   $(document).ready(function () {
-    // Javascript method's body can be found in assets/js/demos.js
-    demo.initDashboardPageCharts();
+    // 1. Sentiment Score Over Time Chart
+    $.getJSON("/static/images/sentiment_score_over_time.json", function (data) {
+      const ctx1 = document
+        .getElementById("sentimentScoreChart")
+        .getContext("2d");
+      const sentimentScoreChart = new Chart(ctx1, {
+        type: "line",
+        data: {
+          labels: data.labels,
+          datasets: [
+            {
+              label: "Sentiment Score",
+              data: data.datasets[0].data,
+              fill: false,
+              borderColor: "rgba(75, 192, 192, 1)",
+              backgroundColor: "rgba(75, 192, 192, 0.2)",
+              borderWidth: 2,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true, ticks: { color: "white" } },
+            x: { ticks: { color: "white" } },
+          },
+          plugins: { legend: { labels: { color: "white" } } },
+        },
+      });
+    });
+
+    // 2. Polarity Distribution Chart
+    $.getJSON("/static/images/polarity_distribution.json", function (data) {
+      const ctx2 = document
+        .getElementById("polarityDistributionChart")
+        .getContext("2d");
+      const polarityDistributionChart = new Chart(ctx2, {
+        type: "pie",
+        data: {
+          labels: data.labels,
+          datasets: [
+            {
+              data: data.datasets[0].data,
+              backgroundColor: ["#3b9b9a", "#d1b24e", "#e94e77", "#4a5d94"],
+            },
+          ],
+        },
+        options: {
+          plugins: { legend: { labels: { color: "white" } } },
+        },
+      });
+    });
+
+    // 3. Concern Frequency Chart
+    $.getJSON("/static/images/concern_frequency.json", function (data) {
+      const ctx3 = document
+        .getElementById("concernFrequencyChart")
+        .getContext("2d");
+
+      // Create a gradient
+      const gradient = ctx3.createLinearGradient(0, 0, 0, 125);
+      gradient.addColorStop(0, "#bf53f0"); // Start color
+      gradient.addColorStop(1, "#27293d"); // End color
+
+      const concernFrequencyChart = new Chart(ctx3, {
+        type: "bar",
+        data: {
+          labels: data.labels,
+          datasets: [
+            {
+              label: "Concern Frequency",
+              data: data.datasets[0].data,
+              backgroundColor: gradient,
+              borderColor: "rgba(54, 162, 235, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true, ticks: { color: "white" } },
+            x: { ticks: { color: "white" } },
+          },
+          plugins: { legend: { labels: { color: "white" } } },
+        },
+      });
+    });
+
+    // 4. Sentiment Shift Analysis Chart
+    $.getJSON("/static/images/sentiment_shift_analysis.json", function (data) {
+      const ctx4 = document
+        .getElementById("sentimentShiftChart")
+        .getContext("2d");
+      const sentimentShiftChart = new Chart(ctx4, {
+        type: "line",
+        data: {
+          labels: data.labels,
+          datasets: data.datasets.map((dataset, index) => ({
+            label: dataset.label,
+            data: dataset.data,
+            fill: true,
+            borderColor: `rgba(${Math.random() * 255}, ${
+              Math.random() * 255
+            }, ${Math.random() * 255}, 1)`,
+            backgroundColor: `rgba(${Math.random() * 255}, ${
+              Math.random() * 255
+            }, ${Math.random() * 255}, 0.2)`,
+          })),
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true, ticks: { color: "white" } },
+            x: { ticks: { color: "white" } },
+          },
+          plugins: { legend: { labels: { color: "white" } } },
+        },
+      });
+    });
+
+    // 5. Intensity Scoring of Concerns Heatmap
+    $.getJSON("/static/images/intensity_scoring_heatmap.json", function (data) {
+      console.log(data); // Check what data is being loaded
+
+      // Mapping labels to indices
+      const xLabels = data.xLabels;
+      const yLabels = data.yLabels;
+
+      const heatmapData = {
+        datasets: [
+          {
+            label: "Intensity Scoring",
+            data: data.data.map((point) => ({
+              x: xLabels.indexOf(point.x), // Get index of x label
+              y: yLabels.indexOf(point.y), // Get index of y label
+              v: point.v,
+            })),
+            backgroundColor: function (context) {
+              const value = context.dataset.data[context.dataIndex].v;
+              const alpha = value > 0 ? Math.min(value / 10, 1) : 0; // Adjust alpha
+              return `rgba(255, 99, 132, ${alpha})`;
+            },
+            anchor: "end",
+            width: 20,
+            height: 20,
+          },
+        ],
+      };
+
+      const ctx5 = document
+        .getElementById("intensityScoringHeatmap")
+        .getContext("2d");
+
+      const intensityScoringHeatmapChart = new Chart(ctx5, {
+        type: "matrix",
+        data: heatmapData,
+        options: {
+          scales: {
+            x: {
+              title: { display: true, text: "Polarity", color: "white" },
+              labels: xLabels, // Set x labels
+              ticks: { color: "white" },
+            },
+            y: {
+              title: { display: true, text: "Concern", color: "white" },
+              labels: yLabels, // Set y labels
+              ticks: { color: "white" },
+            },
+          },
+          plugins: {
+            legend: { display: false },
+          },
+        },
+      });
+    });
   });
 </script>
-
 {% endblock javascripts %}
-

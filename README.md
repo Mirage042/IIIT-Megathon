@@ -124,55 +124,13 @@ python run.py
 - Adaptive intensity scoring
 - Progression tracking for neurological conditions
 
-## API Documentation
-
-[Include API endpoint documentation here]
-
 ## Model Training and Updates
-
-### Mental Health Models
-[Include information about NLP model training and updating procedures]
 
 ### Neurological Analysis Models
 - Training data requirements for MRI analysis
 - Model fine-tuning procedures
 - Validation protocols
 - Performance metrics
-
-## Security and Privacy
-
-- End-to-end encryption for user data
-- HIPAA compliance measures
-- Secure API endpoints
-- Anonymous data processing
-- Medical data protection protocols
-
-## Compliance and Certification
-
-- FDA compliance status
-- Medical device certification
-- Data protection standards
-- Clinical validation studies
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Implement changes with appropriate tests
-4. Submit a pull request
-
-## License
-
-[Add your license information here]
-
-## Acknowledgments
-
-- Medical imaging libraries and frameworks
-- Deep learning model architectures
-- Research institutions and collaborators
-- Open-source contributors
-
-## Research Publications
 
 [Include relevant research papers and publications]
 

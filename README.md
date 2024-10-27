@@ -63,7 +63,7 @@ Core system file managing:
 
 ### chatbot.html
 - Contains the html of the assisstant chatbot icon
-- 
+  
 ## Getting Started
 
 ### Prerequisites
@@ -140,9 +140,3 @@ python run.py
 - Model fine-tuning procedures
 - Validation protocols
 - Performance metrics
-
-[Include relevant research papers and publications]
-
-## Clinical Validation
-
-[Include information about clinical trials and validation studies]

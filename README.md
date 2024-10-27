@@ -36,34 +36,6 @@ An advanced healthcare analysis platform that leverages state-of-the-art AI mode
 - Early warning system for emotional escalation
 - Temporal sentiment shift analysis
 
-## Technical Architecture
-
-### File Structure
-```
-healthcare_analysis/
-├── app/
-│   ├── __init__.py          # Core backend logic, AI integration, and routing
-│   ├── models/
-│   │   ├── sentiment.py     # Sentiment analysis models
-│   │   ├── classification.py # Concern classification
-│   │   ├── prediction.py    # Predictive analytics
-│   │   └── neurological.py  # MRI analysis models
-│   ├── static/
-│   │   ├── data/           # JSON data and model artifacts
-│   │   ├── css/            # Stylesheets
-│   │   └── js/             # Visualization scripts
-│   ├── templates/
-│   │   ├── layouts/
-│   │   │   └── base.html
-│   │   └── dashboard.html
-│   └── utils/
-│       ├── nlp.py          # NLP utilities
-│       ├── imaging.py      # Medical imaging utilities
-│       └── visualization.py # Data visualization tools
-├── run.py                  # Application entry point
-└── README.md
-```
-
 ## Backend Components
 
 ### __init__.py

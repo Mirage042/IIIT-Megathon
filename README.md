@@ -1,5 +1,14 @@
 # AI-Powered Mental Health and Neurological Analysis Dashboard
 
+## Final Repository Submission
+
+The final-final repository serves as the definitive version for submission. Please disregard any previous repositories, as they were utilized for testing and contain outdated code.
+
+The ML_script branch contains all the machine learning scripts.
+
+![image](https://github.com/user-attachments/assets/d959e0cd-5271-486d-b2f5-0f3c9bf0f223)
+
+
 An advanced healthcare analysis platform that leverages state-of-the-art AI models to analyze mental health patterns and neurological conditions. The system combines sophisticated natural language processing, computer vision, and machine learning techniques to provide comprehensive mental health insights and early detection of neurological disorders.
 
 ## Core Features

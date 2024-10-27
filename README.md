@@ -1,299 +1,209 @@
-# [Black Dashboard Flask](https://www.creative-tim.com/product/black-dashboard-flask) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/home?status=Material%20Dashboard,%20a%20free%20Material%20Bootstrap%204%20Admin%20Template%20%E2%9D%A4%EF%B8%8F%20https%3A//bit.ly/2Lyat1Y%20%23bootstrap%20%23material%20%23design%20%23developers%20%23freebie%20%20via%20%40CreativeTim)
+# AI-Powered Mental Health and Neurological Analysis Dashboard
 
- ![version](https://img.shields.io/badge/version-1.0.1-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/black-dashboard-flask.svg?maxAge=2592000)](https://github.com/creativetimofficial/black-dashboard-flask/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/black-dashboard-flask.svg?maxAge=2592000)](https://github.com/creativetimofficial/black-dashboard-flask/issues?q=is%3Aissue+is%3Aclosed) [![Join the chat at https://gitter.im/NIT-dgp/General](https://badges.gitter.im/NIT-dgp/General.svg)](https://gitter.im/creative-tim-general/Lobby) [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/E4aHAQy)
+An advanced healthcare analysis platform that leverages state-of-the-art AI models to analyze mental health patterns and neurological conditions. The system combines sophisticated natural language processing, computer vision, and machine learning techniques to provide comprehensive mental health insights and early detection of neurological disorders.
 
-![Black Dashboard Flask - Admin Dashboard coded in Django.](https://github.com/creativetimofficial/black-dashboard-flask/blob/master/media/black-dashboard-flask-intro.gif)
+## Core Features
 
-<br />
+### 1. Mental Health Analysis
+- Multi-modal input processing (text and images)
+- Contextual emotional state assessment
+- Real-time sentiment analysis
+- Predictive mental health monitoring
 
-> Features:
+### 2. Neurological Disease Detection
+- MRI Image Analysis for Alzheimer's Detection
+  - Advanced CNN architecture for brain scan analysis
+  - Region-specific anomaly detection
+  - Early-stage Alzheimer's identification
+  - Progression tracking and monitoring
+  - Automated reporting of neurological findings
 
-- ✅ `Up-to-date dependencies`
-- ✅ Black Dashboard, BS4 Design
-- ✅ `DB Tools`: SQLAlchemy ORM, `Flask-Migrate` (schema migrations)
-- ✅ `Persistence`: SQLite (dev), MySql (prod)
-- ✅ `Authentication`: Session Based, `OAuth` via Github
-- ✅ `Deployment`: Docker, Page Compression (Flask-Minify) 
+### 3. Advanced Sentiment Analysis
+- BERT and Gemini model integration
+- Custom mental health lexicon
+- Multi-layered polarity detection
+- Sentiment shift tracking
 
-<br />
+### 4. Intelligent Concern Classification
+- Named Entity Recognition (NER) for mental health terminology
+- Dynamic concern categorization
+- Multi-dimensional intensity scoring
+- Adaptive classification system
 
-## Table of Contents
+### 5. Predictive Analytics
+- Proactive sentiment monitoring
+- Pattern recognition
+- Early warning system for emotional escalation
+- Temporal sentiment shift analysis
 
-* [Demo](#demo)
-* [Docker Support](#docker-support)
-* [Quick Start](#quick-start)
-* [Documentation](#documentation)
-* [File Structure](#file-structure)
-* [Browser Support](#browser-support)
-* [Resources](#resources)
-* [Reporting Issues](#reporting-issues)
-* [Technical Support or Questions](#technical-support-or-questions)
-* [Licensing](#licensing)
-* [Useful Links](#useful-links)
+## Technical Architecture
 
-<br />
+### File Structure
+```
+healthcare_analysis/
+├── app/
+│   ├── __init__.py          # Core backend logic, AI integration, and routing
+│   ├── models/
+│   │   ├── sentiment.py     # Sentiment analysis models
+│   │   ├── classification.py # Concern classification
+│   │   ├── prediction.py    # Predictive analytics
+│   │   └── neurological.py  # MRI analysis models
+│   ├── static/
+│   │   ├── data/           # JSON data and model artifacts
+│   │   ├── css/            # Stylesheets
+│   │   └── js/             # Visualization scripts
+│   ├── templates/
+│   │   ├── layouts/
+│   │   │   └── base.html
+│   │   └── dashboard.html
+│   └── utils/
+│       ├── nlp.py          # NLP utilities
+│       ├── imaging.py      # Medical imaging utilities
+│       └── visualization.py # Data visualization tools
+├── run.py                  # Application entry point
+└── README.md
+```
 
-## Demo
+## Backend Components
 
-> To authenticate use the default credentials ***test / pass*** or create a new user on the [registration page](https://www.creative-tim.com/live/black-dashboard-flask).
+### __init__.py
+Core system file managing:
+- AI model initialization and integration
+- Sentiment analysis pipeline
+- NER and classification logic
+- MRI image processing pipeline
+- API endpoints and routing
+- Real-time processing of user inputs
+- Predictive analytics implementation
 
-- **Black Dashboard Flask** [Login Page](https://www.creative-tim.com/live/black-dashboard-flask)
+### ML.py
+- Processes images and calculates various metrics
+- Currently not being used in the main code
 
-<br />
+### chatbot.html
+- Contains the html of the assisstant chatbot icon
+- 
+## Getting Started
 
-## Docker Support
+### Prerequisites
+- Python 3.8+
+- pip (Python package installer)
+- GPU support required for MRI image analysis and model inference
+- CUDA toolkit for deep learning models
 
-> Get the code
+### Installation
 
+1. Clone the repository:
 ```bash
-$ git clone https://github.com/app-generator/black-dashboard-flask.git
-$ cd black-dashboard-flask
+git clone [repository-url]
+cd healthcare_analysis
 ```
 
-> Start the app in Docker
-
+2. Install required packages:
 ```bash
-$ docker-compose up --build 
+pip install -r requirements.txt
 ```
 
-Visit `http://localhost:5085` in your browser. The app should be up & running.
+### Running the Application
 
-<br />
-
-## Create/Edit `.env` file
-
-The meaning of each variable can be found below: 
-
-- `DEBUG`: if `True` the app runs in develoment mode
-  - For production value `False` should be used
-- `ASSETS_ROOT`: used in assets management
-  - default value: `/static/assets`
-- `OAuth` via Github
-  - `GITHUB_ID`=<GITHUB_ID_HERE>
-  - `GITHUB_SECRET`=<GITHUB_SECRET_HERE> 
-
-<br />
-
-## Manual Build
-
-> UNZIP the sources or clone the private repository. After getting the code, open a terminal and navigate to the working directory, with product source code.
-
-### 👉 Set Up for `Unix`, `MacOS` 
-
-> Install modules via `VENV`  
-
+1. Navigate to the project root directory
+2. Run the application:
 ```bash
-$ virtualenv env
-$ source env/bin/activate
-$ pip3 install -r requirements.txt
+python run.py
 ```
 
-<br />
+## AI Model Integration
 
-> Set Up Flask Environment
+### Medical Imaging Analysis
+- Convolutional Neural Networks for MRI processing
+- Region-specific attention mechanisms
+- Automated lesion detection
+- Volumetric analysis of brain regions
+- Progressive monitoring capabilities
 
-```bash
-$ export FLASK_APP=run.py
-$ export FLASK_ENV=development
-```
+### Sentiment Analysis Models
+- BERT-based sentiment analysis
+- Custom-trained mental health lexicon
+- Multi-dimensional polarity detection
 
-<br />
+### Classification System
+- Dynamic concern categorization
+- Intensity scoring algorithm
+- Temporal pattern recognition
 
-> Start the app
+### Predictive Analytics
+- Sentiment shift prediction
+- Early warning system
+- Pattern-based recommendations
 
-```bash
-$ flask run
-// OR
-$ flask run --cert=adhoc # For HTTPS server
-```
+## Visualization Features
 
-At this point, the app runs at `http://127.0.0.1:5000/`. 
+### Interactive Dashboards
+- MRI scan visualization and analysis
+- Brain region highlighting
+- Sentiment timeline tracking
+- Concern intensity heatmaps
+- Polarity distribution charts
+- Temporal shift analysis
 
-<br />
+### Real-time Analytics
+- Live sentiment monitoring
+- Dynamic concern reclassification
+- Adaptive intensity scoring
+- Progression tracking for neurological conditions
 
-### 👉 Set Up for `Windows` 
+## API Documentation
 
-> Install modules via `VENV` (windows) 
+[Include API endpoint documentation here]
 
-```
-$ virtualenv env
-$ .\env\Scripts\activate
-$ pip3 install -r requirements.txt
-```
+## Model Training and Updates
 
-<br />
+### Mental Health Models
+[Include information about NLP model training and updating procedures]
 
-> Set Up Flask Environment
+### Neurological Analysis Models
+- Training data requirements for MRI analysis
+- Model fine-tuning procedures
+- Validation protocols
+- Performance metrics
 
-```bash
-$ # CMD 
-$ set FLASK_APP=run.py
-$ set FLASK_ENV=development
-$
-$ # Powershell
-$ $env:FLASK_APP = ".\run.py"
-$ $env:FLASK_ENV = "development"
-```
+## Security and Privacy
 
-<br />
+- End-to-end encryption for user data
+- HIPAA compliance measures
+- Secure API endpoints
+- Anonymous data processing
+- Medical data protection protocols
 
-> Start the app
+## Compliance and Certification
 
-```bash
-$ flask run
-// OR
-$ flask run --cert=adhoc # For HTTPS server
-```
+- FDA compliance status
+- Medical device certification
+- Data protection standards
+- Clinical validation studies
 
-At this point, the app runs at `http://127.0.0.1:5000/`. 
+## Contributing
 
-<br />
+1. Fork the repository
+2. Create a feature branch
+3. Implement changes with appropriate tests
+4. Submit a pull request
 
-## Recompile SCSS  
+## License
 
-The SCSS/CSS files used to style the Ui are saved in the `apps/static/assets` directory. 
-In order to update the Ui colors (primary, secondary) this procedure needs to be followed. 
+[Add your license information here]
 
-```bash
-$ yarn # install modules
-$ # # edit variables 
-$ vi apps/static/assets/scss/black-dashboard/custom/_variables.scss 
-$ gulp # SCSS to CSS translation
-```
+## Acknowledgments
 
-The `_variables.scss` content defines the `primary` and `secondary` colors: 
+- Medical imaging libraries and frameworks
+- Deep learning model architectures
+- Research institutions and collaborators
+- Open-source contributors
 
-```scss
-$default:       #344675 !default; // EDIT for customization
-$primary:       #e14eca !default; // EDIT for customization
-$secondary:     #f4f5f7 !default; // EDIT for customization
-$success:       #00f2c3 !default; // EDIT for customization
-$info:          #1d8cf8 !default; // EDIT for customization
-$warning:       #ff8d72 !default; // EDIT for customization
-$danger:        #fd5d93 !default; // EDIT for customization
-$black:         #222a42 !default; // EDIT for customization
-```
+## Research Publications
 
-<br />
+[Include relevant research papers and publications]
 
-## Documentation
+## Clinical Validation
 
-The documentation for the **Black Dashboard Flask** is hosted at our [website](https://demos.creative-tim.com/black-dashboard-flask/docs/1.0/getting-started/getting-started-flask.html).
-
-<br />
-
-## File Structure
-
-Within the download you'll find the following directories and files:
-
-```bash
-< PROJECT ROOT >
-   |
-   |-- apps/
-   |    |
-   |    |-- home/                           # A simple app that serve HTML files
-   |    |    |-- routes.py                  # Define app routes
-   |    |
-   |    |-- authentication/                 # Handles auth routes (login and register)
-   |    |    |-- routes.py                  # Define authentication routes  
-   |    |    |-- models.py                  # Defines models  
-   |    |    |-- forms.py                   # Define auth forms (login and register) 
-   |    |
-   |    |-- static/
-   |    |    |-- <css, JS, images>          # CSS files, Javascripts files
-   |    |
-   |    |-- templates/                      # Templates used to render pages
-   |    |    |-- includes/                  # HTML chunks and components
-   |    |    |    |-- navigation.html       # Top menu component
-   |    |    |    |-- sidebar.html          # Sidebar component
-   |    |    |    |-- footer.html           # App Footer
-   |    |    |    |-- scripts.html          # Scripts common to all pages
-   |    |    |
-   |    |    |-- layouts/                   # Master pages
-   |    |    |    |-- base-fullscreen.html  # Used by Authentication pages
-   |    |    |    |-- base.html             # Used by common pages
-   |    |    |
-   |    |    |-- accounts/                  # Authentication pages
-   |    |    |    |-- login.html            # Login page
-   |    |    |    |-- register.html         # Register page
-   |    |    |
-   |    |    |-- home/                      # UI Kit Pages
-   |    |         |-- index.html            # Index page
-   |    |         |-- 404-page.html         # 404 page
-   |    |         |-- *.html                # All other pages
-   |    |    
-   |  config.py                             # Set up the app
-   |    __init__.py                         # Initialize the app
-   |
-   |-- requirements.txt                     # App Dependencies
-   |
-   |-- .env                                 # Inject Configuration via Environment
-   |-- run.py                               # Start the app - WSGI gateway
-   |
-   |-- ************************************************************************
-```
-
-<br />
-
-## Browser Support
-
-At present, we officially aim to support the last two versions of the following browsers:
-
-<img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/chrome.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/firefox.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/edge.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/safari.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/opera.png" width="64" height="64">
-
-<br />
-
-## Resources
-
-- Demo: <https://www.creative-tim.com/live/black-dashboard-flask>
-- Download Page: <https://www.creative-tim.com/product/black-dashboard-flask>
-- Documentation: <https://demos.creative-tim.com/black-dashboard-flask/docs/1.0/getting-started/getting-started-flask.html>
-- License Agreement: <https://www.creative-tim.com/license>
-- Support: <https://www.creative-tim.com/contact-us>
-- Issues: [Github Issues Page](https://github.com/creativetimofficial/black-dashboard-flask/issues)
-
-<br />
-
-## Reporting Issues
-
-We use GitHub Issues as the official bug tracker for the **Black Dashboard Flask**. Here are some advices for our users that want to report an issue:
-
-1. Make sure that you are using the latest version of the **Black Dashboard Flask**. Check the CHANGELOG from your dashboard on our [website](https://www.creative-tim.com/).
-2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.
-3. Some issues may be browser-specific, so specifying in what browser you encountered the issue might help.
-
-<br />
-
-## Technical Support or Questions
-
-If you have questions or need help integrating the product please [contact us](https://www.creative-tim.com/contact-us) instead of opening an issue.
-
-<br />
-
-## Licensing
-
-- Copyright 2019 - present [Creative Tim](https://www.creative-tim.com/)
-- Licensed under [Creative Tim EULA](https://www.creative-tim.com/license)
-
-<br />
-
-## Useful Links
-
-- [More products](https://www.creative-tim.com/bootstrap-themes) from Creative Tim
-- [Tutorials](https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w)
-- [Freebies](https://www.creative-tim.com/bootstrap-themes/free) from Creative Tim
-- [Affiliate Program](https://www.creative-tim.com/affiliates/new) (earn money)
-
-<br />
-
-## Social Media
-
-- Twitter: <https://twitter.com/CreativeTim>
-- Facebook: <https://www.facebook.com/CreativeTim>
-- Dribbble: <https://dribbble.com/creativetim>
-- Instagram: <https://www.instagram.com/CreativeTimOfficial>
-
-<br />
-
----
-[Black Dashboard Flask](https://www.creative-tim.com/product/black-dashboard-flask) - Provided by [Creative Tim](https://www.creative-tim.com/) and [AppSeed](https://appseed.us)
+[Include information about clinical trials and validation studies]

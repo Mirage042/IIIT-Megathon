@@ -1,0 +1,491 @@
+{% extends "layouts/base.html" %} {% block title %} Dashboard {% endblock %}
+
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+/>
+{% endblock stylesheets %} {% block content %}
+<div class="content">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Sentiment Score Over Time</h5>
+          <h3 class="card-title">
+            <i class="tim-icons icon-bell-55 text-primary"></i> Sentiment Score
+            Chart
+          </h3>
+          <canvas
+            id="sentimentScoreChart"
+            width="800"
+            height="500"
+            style="padding: 10px"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Concern Frequency</h5>
+          <h3 class="card-title">
+            <i class="tim-icons icon-bell-55 text-primary"></i> Concern
+            Frequency Chart
+          </h3>
+          <canvas
+            id="concernFrequencyChart"
+            width="800"
+            height="500"
+            style="padding: 10px"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Sentiment Shift Analysis</h5>
+          <h3 class="card-title">
+            <i class="tim-icons icon-bell-55 text-primary"></i> Sentiment Shift
+            Chart
+          </h3>
+          <canvas
+            id="sentimentShiftChart"
+            width="800"
+            height="500"
+            style="padding: 10px"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Intensity Scoring of Concerns Heatmap</h5>
+          <h3 class="card-title">
+            <i class="tim-icons icon-bell-55 text-primary"></i> Intensity
+            Scoring of Concerns Heatmap
+          </h3>
+          <canvas
+            id="intensityScoringHeatmap"
+            width="800"
+            height="500"
+          ></canvas>
+        </div>
+      </div>
+      <div
+        style="
+          max-width: fit-content;
+          padding: 20px;
+          height: 140px;
+          padding-top: 0px;
+        "
+      >
+        <p
+          style="
+            font-family: 'Arial', sans-serif;
+            font-size: 19px;
+            line-height: 1.6;
+          "
+        >
+          We strive to create a safe and supportive environment where
+          individuals can connect, share their experiences, and access the
+          resources they need to thrive.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-lg-4" style="max-width: 66%">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h5 class="card-category">Polarity Distribution</h5>
+          <h3 class="card-title">
+            <i class="tim-icons icon-bell-55 text-primary"></i> Polarity
+            Distribution Chart
+          </h3>
+          <canvas
+            id="polarityDistributionChart"
+            width="400"
+            height="400"
+            style="padding: 10px"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="col-lg-4"
+      style="
+        max-width: 28%;
+        padding: 20px;
+        height: 500px;
+        overflow-y: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <p
+        style="
+          font-family: 'Arial', sans-serif;
+          font-size: 19px;
+          line-height: 1.6;
+          text-align: center;
+        "
+      >
+        At Mindpeers, we believe that mental health is as important as physical
+        health. Our mission is to provide accessible and compassionate support
+        for everyone on their mental wellness journey. Navigating mental health
+        challenges can be daunting, and we are here to walk alongside you every
+        step of the way. Our dedicated team creates a safe space for you to
+        explore your feelings without judgment, fostering a community where
+        everyone feels valued and heard.
+      </p>
+    </div>
+
+    <div class="col-lg-4" style="max-width: 33.33%">
+      <div class="card card-chart">
+        <div class="card-header">
+          <canvas id="heatmapChart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4" style="max-width: 33.33%">
+      <div class="card card-chart">
+        <div class="card-header" style="padding: 20px">
+          <canvas id="radialBarChart" width="300" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4" style="max-width: 33.33%">
+      <div class="card card-chart">
+        <div class="card-header" style="padding: 20px">
+          <h2>Feedback Over Time</h2>
+          <canvas id="feedbackChart" width="800" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+<!-- Ensure end of content block is here -->
+
+<!-- Specific Page JS goes HERE -->
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1.1/dist/chartjs-chart-matrix.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    // 1. Sentiment Score Over Time Chart
+    $.getJSON("/static/images/sentiment_score_over_time.json", function (data) {
+      const ctx1 = document
+        .getElementById("sentimentScoreChart")
+        .getContext("2d");
+      const sentimentScoreChart = new Chart(ctx1, {
+        type: "line",
+        data: {
+          labels: data.labels,
+          datasets: [
+            {
+              label: "Sentiment Score",
+              data: data.datasets[0].data,
+              fill: false,
+              borderColor: "rgba(75, 192, 192, 1)",
+              backgroundColor: "rgba(75, 192, 192, 0.2)",
+              borderWidth: 2,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true, ticks: { color: "white" } },
+            x: { ticks: { color: "white" } },
+          },
+          plugins: { legend: { labels: { color: "white" } } },
+        },
+      });
+    });
+
+    // 2. Polarity Distribution Chart
+    $.getJSON("/static/images/polarity_distribution.json", function (data) {
+      const ctx2 = document
+        .getElementById("polarityDistributionChart")
+        .getContext("2d");
+      const polarityDistributionChart = new Chart(ctx2, {
+        type: "pie",
+        data: {
+          labels: data.labels,
+          datasets: [
+            {
+              data: data.datasets[0].data,
+              backgroundColor: ["#3b9b9a", "#d1b24e", "#e94e77", "#4a5d94"],
+            },
+          ],
+        },
+        options: {
+          plugins: { legend: { labels: { color: "white" } } },
+        },
+      });
+    });
+
+    // 3. Concern Frequency Chart
+    $.getJSON("/static/images/concern_frequency.json", function (data) {
+      const ctx3 = document
+        .getElementById("concernFrequencyChart")
+        .getContext("2d");
+
+      // Create a gradient
+      const gradient = ctx3.createLinearGradient(0, 0, 0, 125);
+      gradient.addColorStop(0, "#bf53f0"); // Start color
+      gradient.addColorStop(1, "#27293d"); // End color
+
+      const concernFrequencyChart = new Chart(ctx3, {
+        type: "bar",
+        data: {
+          labels: data.labels,
+          datasets: [
+            {
+              label: "Concern Frequency",
+              data: data.datasets[0].data,
+              backgroundColor: gradient,
+              borderColor: "rgba(54, 162, 235, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true, ticks: { color: "white" } },
+            x: { ticks: { color: "white" } },
+          },
+          plugins: { legend: { labels: { color: "white" } } },
+        },
+      });
+    });
+
+    // 4. Sentiment Shift Analysis Chart
+    $.getJSON("/static/images/sentiment_shift_analysis.json", function (data) {
+      const ctx4 = document
+        .getElementById("sentimentShiftChart")
+        .getContext("2d");
+      const sentimentShiftChart = new Chart(ctx4, {
+        type: "line",
+        data: {
+          labels: data.labels,
+          datasets: data.datasets.map((dataset, index) => ({
+            label: dataset.label,
+            data: dataset.data,
+            fill: true,
+            borderColor: `rgba(${Math.random() * 255}, ${
+              Math.random() * 255
+            }, ${Math.random() * 255}, 1)`,
+            backgroundColor: `rgba(${Math.random() * 255}, ${
+              Math.random() * 255
+            }, ${Math.random() * 255}, 0.2)`,
+          })),
+        },
+        options: {
+          scales: {
+            y: { beginAtZero: true, ticks: { color: "white" } },
+            x: { ticks: { color: "white" } },
+          },
+          plugins: { legend: { labels: { color: "white" } } },
+        },
+      });
+    });
+
+    // 5. Intensity Scoring of Concerns Heatmap
+    $.getJSON("/static/images/intensity_scoring_heatmap.json", function (data) {
+      console.log(data); // Check what data is being loaded
+
+      // Mapping labels to indices
+      const xLabels = data.xLabels;
+      const yLabels = data.yLabels;
+
+      const heatmapData = {
+        datasets: [
+          {
+            label: "Intensity Scoring",
+            data: data.data.map((point) => ({
+              x: xLabels.indexOf(point.x), // Get index of x label
+              y: yLabels.indexOf(point.y), // Get index of y label
+              v: point.v,
+            })),
+            backgroundColor: function (context) {
+              const value = context.dataset.data[context.dataIndex].v;
+              const alpha = value > 0 ? Math.min(value / 10, 1) : 0; // Adjust alpha
+              return `rgba(255, 99, 132, ${alpha})`;
+            },
+            anchor: "end",
+            width: 20,
+            height: 20,
+          },
+        ],
+      };
+
+      const ctx5 = document
+        .getElementById("intensityScoringHeatmap")
+        .getContext("2d");
+
+      const intensityScoringHeatmapChart = new Chart(ctx5, {
+        type: "matrix",
+        data: heatmapData,
+        options: {
+          scales: {
+            x: {
+              title: { display: true, text: "Polarity", color: "white" },
+              labels: xLabels, // Set x labels
+              ticks: { color: "white" },
+            },
+            y: {
+              title: { display: true, text: "Concern", color: "white" },
+              labels: yLabels, // Set y labels
+              ticks: { color: "white" },
+            },
+          },
+          plugins: {
+            legend: { display: false },
+          },
+        },
+      });
+    });
+  });
+
+  const ctx = document.getElementById("heatmapChart").getContext("2d");
+
+  const feedbackData = [10, 20, 15, 30, 25]; // Number of votes for each star
+  const labels = ["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"];
+
+  const heatmapChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Feedback",
+          data: feedbackData,
+          backgroundColor: feedbackData.map((value) => {
+            const intensity = Math.round(
+              (value / Math.max(...feedbackData)) * 255
+            );
+            return `rgba(${intensity}, 100, 150, 0.6)`;
+          }),
+          borderColor: "rgba(0, 0, 0, 1)",
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: Math.max(...feedbackData) + 10,
+        },
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return context.label + ": " + context.raw + " votes";
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const ctx1 = document.getElementById("radialBarChart").getContext("2d");
+
+  const feedbackData1 = [10, 5, 15, 20, 50]; // Number of votes for each star (1 to 5)
+  const totalVotes = feedbackData1.reduce((a, b) => a + b, 0);
+  const feedbackPercentage = feedbackData1.map(
+    (vote) => (vote / totalVotes) * 100
+  );
+
+  const radialBarChart = new Chart(ctx1, {
+    type: "doughnut",
+    data: {
+      labels: ["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"],
+      datasets: [
+        {
+          data: feedbackPercentage,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.6)", // 1 Star
+            "rgba(255, 159, 64, 0.6)", // 2 Stars
+            "rgba(255, 205, 86, 0.6)", // 3 Stars
+            "rgba(75, 192, 192, 0.6)", // 4 Stars
+            "rgba(54, 162, 235, 0.6)", // 5 Stars
+          ],
+          borderWidth: 0,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      cutout: "70%", // Adjust cutout for inner circle effect
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return (
+                context.label +
+                ": " +
+                feedbackPercentage[context.dataIndex].toFixed(1) +
+                "%"
+              );
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const ctx2 = document.getElementById("feedbackChart").getContext("2d");
+  const feedbackChart = new Chart(ctx2, {
+    type: "line",
+    data: {
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [
+        {
+          label: "User Feedback Score",
+          data: [3, 2, 5, 4, 7, 6, 8], // Example data points
+          fill: false,
+          borderColor: "rgba(75, 192, 192, 1)",
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          borderWidth: 2,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: "white",
+          },
+        },
+        x: {
+          ticks: {
+            color: "white",
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: "white",
+          },
+        },
+      },
+    },
+  });
+</script>
+{% endblock javascripts %}

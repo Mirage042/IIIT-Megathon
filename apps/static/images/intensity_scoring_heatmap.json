@@ -1,0 +1,93 @@
+{
+  "yLabels": [
+    "None",
+    "feeling better",
+    "overwhelmed with anxiety, hope, optimism",
+    "very anxious",
+    "calm",
+    "extremely positive",
+    "neutral feelings"
+  ],
+  "xLabels": [
+    "Neutral",
+    "Neutral ",
+    "Positive",
+    "Unknown",
+    "Negative",
+    "Very Positive"
+  ],
+  "data": [
+    { "x": "Neutral", "y": "None", "v": 0.0 },
+    { "x": "Neutral ", "y": "None", "v": 0.0 },
+    { "x": "Positive", "y": "None", "v": 0.0 },
+    { "x": "Unknown", "y": "None", "v": 0.0 },
+    { "x": "Negative", "y": "None", "v": 0.5 },
+    { "x": "Very Positive", "y": "None", "v": 0.0 },
+
+    { "x": "Neutral", "y": "feeling better", "v": 0.0 },
+    { "x": "Neutral ", "y": "feeling better", "v": 0.0 },
+    { "x": "Positive", "y": "feeling better", "v": 1.0 },
+    { "x": "Unknown", "y": "feeling better", "v": 0.0 },
+    { "x": "Negative", "y": "feeling better", "v": 0.8 },
+    { "x": "Very Positive", "y": "feeling better", "v": 2.0 },
+
+    {
+      "x": "Neutral",
+      "y": "overwhelmed with anxiety, hope, optimism",
+      "v": 2.4
+    },
+    {
+      "x": "Neutral ",
+      "y": "overwhelmed with anxiety, hope, optimism",
+      "v": 2.4
+    },
+    {
+      "x": "Positive",
+      "y": "overwhelmed with anxiety, hope, optimism",
+      "v": 0.0
+    },
+    {
+      "x": "Unknown",
+      "y": "overwhelmed with anxiety, hope, optimism",
+      "v": 0.0
+    },
+    {
+      "x": "Negative",
+      "y": "overwhelmed with anxiety, hope, optimism",
+      "v": 1.5
+    },
+    {
+      "x": "Very Positive",
+      "y": "overwhelmed with anxiety, hope, optimism",
+      "v": 0.0
+    },
+
+    { "x": "Neutral", "y": "very anxious", "v": 3.0 },
+    { "x": "Neutral ", "y": "very anxious", "v": 2.8 },
+    { "x": "Positive", "y": "very anxious", "v": 0.0 },
+    { "x": "Unknown", "y": "very anxious", "v": 0.0 },
+    { "x": "Negative", "y": "very anxious", "v": 2.0 },
+    { "x": "Very Positive", "y": "very anxious", "v": 0.0 },
+
+    { "x": "Neutral", "y": "calm", "v": 0.5 },
+    { "x": "Neutral ", "y": "calm", "v": 1.0 },
+    { "x": "Positive", "y": "calm", "v": 2.5 },
+    { "x": "Unknown", "y": "calm", "v": 0.0 },
+    { "x": "Negative", "y": "calm", "v": 0.2 },
+    { "x": "Very Positive", "y": "calm", "v": 3.0 },
+
+    { "x": "Neutral", "y": "extremely positive", "v": 1.5 },
+    { "x": "Neutral ", "y": "extremely positive", "v": 1.2 },
+    { "x": "Positive", "y": "extremely positive", "v": 3.0 },
+    { "x": "Unknown", "y": "extremely positive", "v": 0.5 },
+    { "x": "Negative", "y": "extremely positive", "v": 0.0 },
+    { "x": "Very Positive", "y": "extremely positive", "v": 3.5 },
+
+    { "x": "Neutral", "y": "neutral feelings", "v": 0.0 },
+    { "x": "Neutral ", "y": "neutral feelings", "v": 0.0 },
+    { "x": "Positive", "y": "neutral feelings", "v": 1.0 },
+    { "x": "Unknown", "y": "neutral feelings", "v": 1.5 },
+    { "x": "Negative", "y": "neutral feelings", "v": 0.0 },
+    { "x": "Very Positive", "y": "neutral feelings", "v": 0.0 }
+  ]
+}

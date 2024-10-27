@@ -68,7 +68,7 @@ Core system file managing:
 1. Clone the repository:
 ```bash
 git clone [repository-url]
-cd healthcare_analysis
+cd IIIT-Megathon
 ```
 
 2. Install required packages:

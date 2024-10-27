@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radial Bar Chart for Feedback</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        canvas {
+            display: block;
+            margin: auto;
+            background-color: #fff; /* Optional: add a background color */
+        }
+    </style>
+</head>
+<body>
+    <canvas id="radialBarChart" width="400" height="400"></canvas>
+
+    <script>
+        const ctx = document.getElementById('radialBarChart').getContext('2d');
+        
+        const feedbackData = [10, 5, 15, 20, 50]; // Number of votes for each star (1 to 5)
+        const totalVotes = feedbackData.reduce((a, b) => a + b, 0);
+        const feedbackPercentage = feedbackData.map(vote => (vote / totalVotes) * 100);
+        
+        const radialBarChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'],
+                datasets: [{
+                    data: feedbackPercentage,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',  // 1 Star
+                        'rgba(255, 159, 64, 0.6)',  // 2 Stars
+                        'rgba(255, 205, 86, 0.6)',  // 3 Stars
+                        'rgba(75, 192, 192, 0.6)',   // 4 Stars
+                        'rgba(54, 162, 235, 0.6)'    // 5 Stars
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                cutout: '70%', // Adjust cutout for inner circle effect
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + feedbackPercentage[context.dataIndex].toFixed(1) + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
